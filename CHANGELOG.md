@@ -10,6 +10,13 @@ gets its own [contract spec artifact](./spec) once exported.
 
 ## [Unreleased]
 
+### Fixed
+- `distribute` now skips the keeper bounty when the caller-supplied keeper
+  address equals the contract's own address. Previously, passing the contract
+  address as the keeper would deduct the bounty from the beneficiaries' pool
+  and attempt a circular transfer to the contract itself, where the funds
+  could not be claimed (#662).
+
 ### Security
 - `release_inheritance` re-reads the will from storage and re-validates that
   it is still `Triggered` (with a recorded `trigger_time`) immediately before
